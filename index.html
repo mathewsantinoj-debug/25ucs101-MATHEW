@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JK Travels - Bus Booking</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f5;color:#252525}
+header{height:64px;background:#d8232a;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:20}
+.logo{font-size:23px;font-weight:800}.logo span{font-size:12px;display:block;font-weight:400}
+nav{display:flex;gap:25px;align-items:center}nav a{color:#fff;text-decoration:none;font-size:14px}
+.account{border:1px solid #ffffff66;border-radius:20px;padding:9px 15px}
+.hero{background:linear-gradient(180deg,#c91d25,#e53935);height:300px;padding-top:45px;text-align:center;color:#fff}
+.hero h1{font-size:30px;margin-bottom:8px}.hero p{opacity:.9}
+.booking{width:min(1100px,92%);margin:-75px auto 35px;background:#fff;border-radius:8px;padding:25px;box-shadow:0 5px 25px #0002;position:relative;z-index:2}
+.tabs{display:flex;gap:30px;border-bottom:1px solid #eee;margin-bottom:20px}
+.tab{padding:0 4px 13px;font-weight:700;color:#555;cursor:pointer}.tab.active{color:#d8232a;border-bottom:3px solid #d8232a}
+.form{display:grid;grid-template-columns:1.1fr 1.1fr .9fr .7fr auto;gap:12px;align-items:end}
+.field label{display:block;font-size:11px;color:#777;font-weight:700;margin-bottom:7px}
+.field input,.field select{width:100%;height:48px;border:1px solid #ddd;border-radius:4px;padding:0 12px;font-size:14px;outline:none;background:#fff}
+.field input:focus{border-color:#d8232a}
+.search{height:48px;background:#d8232a;color:#fff;border:0;border-radius:4px;padding:0 25px;font-weight:700;font-size:15px;cursor:pointer}
+.swap{position:absolute;left:50%;top:103px;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #ddd;color:#d8232a;cursor:pointer;box-shadow:0 2px 5px #0001}
+.container{width:min(1100px,92%);margin:auto}
+.quick{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:30px}.quick div{background:#fff;border:1px solid #eee;border-radius:5px;padding:12px 18px;font-size:13px}
+section{margin-bottom:35px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.section-title h2{font-size:22px}.view{color:#d8232a;font-size:14px;font-weight:700}
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.offer{background:#fff;border-radius:7px;overflow:hidden;border:1px solid #eee;display:flex;min-height:135px}
+.offer-img{width:38%;background:#d8232a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:42px}.offer-body{padding:17px}.offer-body h3{font-size:16px;margin-bottom:7px}.offer-body p{font-size:12px;color:#777;line-height:1.5}.coupon{margin-top:10px;display:inline-block;border:1px dashed #d8232a;color:#d8232a;padding:5px 9px;font-size:11px;font-weight:bold}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.trust-card{background:#fff;border:1px solid #eee;padding:20px;text-align:center;border-radius:7px}.trust-card b{display:block;margin:8px 0 5px}.trust-card span{font-size:12px;color:#777}
+footer{background:#333;color:#ddd;padding:30px 6%;margin-top:50px;font-size:13px}.footer-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;gap:25px}.footer-title{color:#fff;font-weight:bold;margin-bottom:8px}
+#results{display:none}.result-layout{display:grid;grid-template-columns:220px 1fr;gap:18px}.filters,.bus-card{background:#fff;border:1px solid #e5e5e5;border-radius:6px}.filters{padding:18px;height:max-content}.filters h3{font-size:15px;margin-bottom:15px}.filters label{display:block;font-size:13px;margin:12px 0}.bus-card{padding:18px;margin-bottom:12px}.bus-top{display:flex;justify-content:space-between;gap:10px}.bus-name{font-weight:bold;font-size:17px}.muted{color:#777;font-size:12px}.price{font-weight:bold;font-size:18px}.bus-info{display:flex;justify-content:space-between;margin:18px 0;padding:13px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}.bus-actions{display:flex;justify-content:space-between;align-items:center}.seats{color:#168a43;font-size:12px}.select-btn{background:#d8232a;color:white;border:0;border-radius:4px;padding:10px 18px;font-weight:bold;cursor:pointer}
+@media(max-width:800px){nav{display:none}.form{grid-template-columns:1fr 1fr}.search{width:100%}.swap{display:none}.offers{grid-template-columns:1fr}.trust{grid-template-columns:1fr 1fr}.result-layout{grid-template-columns:1fr}.hero{height:260px}}
+@media(max-width:500px){header{padding:0 4%}.logo{font-size:19px}.hero h1{font-size:24px}.booking{margin-top:-55px;padding:18px}.form{grid-template-columns:1fr}.tabs{gap:18px}.trust{grid-template-columns:1fr}.container{width:94%}.bus-info{gap:10px;flex-wrap:wrap}.footer-inner{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🚌 JK Travels<span>Safe • Reliable • Comfortable</span></div>
+  <nav><a href="#">Home</a><a href="#offers">Offers</a><a href="#results">Bus Tickets</a><a href="#">Help</a><a class="account" href="#">👤 My Account</a></nav>
+</header>
+
+<div class="hero">
+  <h1>Book Bus Tickets Online</h1>
+  <p>Find the best buses, seats and prices for your journey</p>
+</div>
+
+<div class="booking">
+  <div class="tabs"><div class="tab active">🚌 Bus Tickets</div><div class="tab">🎫 My Bookings</div></div>
+  <div class="form">
+    <div class="field"><label>FROM</label><input id="from" placeholder="Enter departure city"></div>
+    <div class="field"><label>TO</label><input id="to" placeholder="Enter destination"></div>
+    <div class="field"><label>DATE OF JOURNEY</label><input id="date" type="date"></div>
+    <div class="field"><label>PASSENGERS</label><select id="passengers"><option>1 Passenger</option><option>2 Passengers</option><option>3 Passengers</option><option>4 Passengers</option></select></div>
+    <button class="search" onclick="searchTrips()">SEARCH BUSES</button>
+  </div>
+  <button class="swap" onclick="swapCities()" title="Swap cities">⇄</button>
+</div>
+
+<div class="container">
+  <div class="quick">
+    <div>🔒 Secure payments</div><div>⚡ Instant confirmation</div><div>💺 Choose your seat</div><div>📱 Mobile tickets</div>
+  </div>
+
+  <section id="offers">
+    <div class="section-title"><h2>Offers & Deals</h2><a class="view" href="#">View all →</a></div>
+    <div class="offers">
+      <div class="offer"><div class="offer-img">🏷️</div><div class="offer-body"><h3>Bus Booking Offer</h3><p>Save on selected routes and weekend journeys.</p><span class="coupon">JKBUS10</span></div></div>
+      <div class="offer"><div class="offer-img">💰</div><div class="offer-body"><h3>First Booking</h3><p>Special savings for your first online bus booking.</p><span class="coupon">FIRSTBUS</span></div></div>
+      <div class="offer"><div class="offer-img">🎁</div><div class="offer-body"><h3>Weekend Deals</h3><p>Get great fares when you plan your weekend trip.</p><span class="coupon">WEEKEND</span></div></div>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="section-title"><h2 id="resultTitle">Available Buses</h2><span class="muted">Best matches for your route</span></div>
+    <div class="result-layout">
+      <div class="filters"><h3>Filter Buses</h3><label><input type="checkbox"> AC Bus</label><label><input type="checkbox"> Sleeper</label><label><input type="checkbox"> Seater</label><label><input type="checkbox"> Free Cancellation</label><hr style="border:0;border-top:1px solid #eee;margin:15px 0"><h3>Departure</h3><label><input type="checkbox"> Before 6 AM</label><label><input type="checkbox"> 6 AM - 12 PM</label><label><input type="checkbox"> 12 PM - 6 PM</label><label><input type="checkbox"> After 6 PM</label></div>
+      <div id="busList"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><h2>Why book with JK Travels?</h2></div>
+    <div class="trust">
+      <div class="trust-card">🛡️<b>Safe & Secure</b><span>Your booking and payment are protected.</span></div>
+      <div class="trust-card">💺<b>Seat Selection</b><span>Choose your preferred seat before travel.</span></div>
+      <div class="trust-card">💳<b>Easy Payments</b><span>Simple and convenient online payment.</span></div>
+      <div class="trust-card">☎️<b>24/7 Support</b><span>We're here when you need help.</span></div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="footer-inner"><div><div class="footer-title">JK Travels</div>Book buses easily and travel comfortably.</div><div><div class="footer-title">Quick Links</div>Bus Tickets · Offers · Help · My Account</div><div><div class="footer-title">Support</div>Customer Support · Cancellation · Terms</div></div></footer>
+
+<script>
+function swapCities(){
+  const a=document.getElementById('from'),b=document.getElementById('to');
+  [a.value,b.value]=[b.value,a.value];
+}
+function searchTrips(){
+  const from=document.getElementById('from').value.trim(),to=document.getElementById('to').value.trim();
+  if(!from||!to){alert('Please enter both From and To locations.');return;}
+  const date=document.getElementById('date').value;
+  document.getElementById('resultTitle').textContent='Buses: '+from+' → '+to;
+  const list=document.getElementById('busList');
+  const buses=[
+    ['JK Express AC Sleeper','21:30','06:30','₹699','32 Seats','AC • Sleeper'],
+    ['JK Travels Volvo','22:15','07:00','₹849','18 Seats','AC • Semi Sleeper'],
+    ['JK Super Fast','23:00','07:30','₹599','27 Seats','Non-AC • Seater']
+  ];
+  list.innerHTML=buses.map(b=>`<div class="bus-card"><div class="bus-top"><div><div class="bus-name">${b[0]}</div><div class="muted">${b[5]}</div></div><div class="price">${b[3]}</div></div><div class="bus-info"><div><b>${b[1]}</b><br><span class="muted">${from}</span></div><div>→</div><div><b>${b[2]}</b><br><span class="muted">${to}</span></div><div class="muted">8h 30m</div></div><div class="bus-actions"><span class="seats">● ${b[4]} available</span><button class="select-btn" onclick="alert('Seat selection opened for ${b[0]}')">SELECT SEAT</button></div></div>`).join('');
+  document.getElementById('results').style.display='block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
